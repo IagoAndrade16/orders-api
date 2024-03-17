@@ -6,10 +6,9 @@ import { ValidationsUtils } from './ValidationsUtils';
 
 export class Environment {
 	private static varsSchema = yup.object({
-		NODE_ENV: yup.string().required().oneOf(['dev', 'test', 'prod']),
+		NODE_ENV: yup.string().required().oneOf(['dev', 'prod']),
 		PORT: yup.string().required(),
 
-		APP_BLOCK_ORIGIN: yup.string().required().max(16),
 		DB_LOGGING: yup.boolean().required(),
 
 		MYSQL_HOST: yup.string().required(),
