@@ -6,7 +6,7 @@ import { ValidationsUtils } from './ValidationsUtils';
 
 export class Environment {
 	private static varsSchema = yup.object({
-		NODE_ENV: yup.string().required().oneOf(['dev', 'prod']),
+		NODE_ENV: yup.string().required(),
 		PORT: yup.string().required(),
 
 		DB_LOGGING: yup.boolean().required(),
@@ -49,7 +49,7 @@ export class Environment {
 		return Environment.vars !== undefined;
 	}
 
-	static getType(): 'dev' | 'test' | 'prod' {
-		return process.env.NODE_ENV as 'dev' | 'test' | 'prod';
+	static getType(): 'dev' | 'prod' {
+		return process.env.NODE_ENV as 'dev' | 'prod';
 	}
 }
