@@ -5,6 +5,8 @@ import { UsersRepositoryTypeOrm } from '../modules/users/repositories/implementa
 import { UsersRepository, usersRepositoryAlias } from '../modules/users/repositories/UsersRepository';
 import { ApiProvider, apiProviderAlias } from '../providers/api/ApiProvider';
 import { ApiProviderAxios } from '../providers/api/implementations/ApiProviderAxios';
+import { DateProvider, dateProviderAlias } from '../providers/date/DateProvider';
+import { DateProviderImpl } from '../providers/date/implementations/DateProviderImpl';
 import { EncryptionProvider, encryptionProviderAlias } from '../providers/encryption/EncryptionProvider';
 import { EncryptionProviderImpl } from '../providers/encryption/implementations/EncryptionProviderImpl';
 import { HashProvider, hashProviderAlias } from '../providers/hash/HashProvider';
@@ -22,6 +24,7 @@ export class DependencyInjection {
 		container.registerSingleton<RandomProvider>(randomProviderAlias, RandomProviderImpl);
 		container.registerSingleton<JwtProvider>(jwtProviderAlias, JwtProviderImpl);
 		container.registerSingleton<UsersRepository>(usersRepositoryAlias, UsersRepositoryTypeOrm);
+		container.registerSingleton<DateProvider>(dateProviderAlias, DateProviderImpl);
 	}
 }
 
