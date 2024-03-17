@@ -53,3 +53,21 @@ describe('findById', () => {
 		expect(user).toEqual(insertedUser);
 	});
 });
+
+describe('findByEmail', () => {
+	it('should return null if user does not exist', async () => {
+		const user = await repository.findByEmail('not existent email');
+
+		expect(user).toBeNull();
+	});
+
+	it('should return the user if it exists', async () => {
+		const insertedUser = await repository.create(sampleUserDTO);
+
+		const user = await repository.findByEmail(insertedUser.email);
+
+		await deleteById(insertedUser.id);
+
+		expect(user).toEqual(insertedUser);
+	});
+});
