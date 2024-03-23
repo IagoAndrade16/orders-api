@@ -28,6 +28,13 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
 
     async fetchItems(filters: FetchProductsDTO): Promise<Product[]> {
     	const { page = 1, pageSize = 10 } = filters;
-    	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize });
+    	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize, where: { deleted: false } });
+    }
+
+    async delete(id: string): Promise<void> {
+    	await this.repository.update(id, {
+    		deleted: true,
+    		deletedAt: new Date(),
+    	});
     }
 }

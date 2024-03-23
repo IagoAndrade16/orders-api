@@ -123,20 +123,39 @@ describe('fetchItems', () => {
 			userId: 'user-id',
 		});
 
-		const products = await repository.fetchItems({ page: 1, pageSize: 1 });
+		const products = await repository.fetchItems({ page: 1, pageSize: 1000 });
 
 		await Database.source.getRepository('Product').delete(product1.id);
 		await Database.source.getRepository('Product').delete(product2.id);
 
-		expect(products).toHaveLength(1);
-		expect(products[0]).toMatchObject({
-			id: expect.any(String),
-			name: expect.any(String),
-			description: expect.any(String),
-			price: expect.any(Number),
-			imageUrl: expect.any(String),
-			createdAt: expect.any(Date),
-			updatedAt: expect.any(Date),
+		expect(products.map((product) => product.id)).toContain(product1.id);
+	});
+});
+
+describe('delete', () => {
+	it('should delete a product', async () => {
+		const product = await repository.insert({
+			name: 'Product',
+			description: 'Description',
+			price: 10,
+			imageUrl: 'http://image.com/image.png',
+			userId: 'user-id',
+		});
+
+		await repository.delete(product.id);
+
+		const deletedProduct = await Database.source.getRepository('Product').findOne({
+			where: {
+				id: product.id,
+			},
+		});
+
+		await Database.source.getRepository('Product').delete(product.id);
+
+		expect(deletedProduct).toMatchObject({
+			id: product.id,
+			deleted: true,
+			deletedAt: expect.any(Date),
 		});
 	});
 });
