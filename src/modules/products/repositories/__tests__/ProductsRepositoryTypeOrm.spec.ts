@@ -72,3 +72,35 @@ describe('updateById', () => {
 		});
 	});
 });
+
+describe('findById', () => {
+	it('should not find a product by id', async () => {
+		const product = await repository.findById('id');
+
+		expect(product).toBeNull();
+	});
+
+	it('should find a product by id', async () => {
+		const product = await repository.insert({
+			name: 'Product',
+			description: 'Description',
+			price: 10,
+			imageUrl: 'http://image.com/image.png',
+			userId: 'user-id',
+		});
+
+		const foundProduct = await repository.findById(product.id);
+
+		await Database.source.getRepository('Product').delete(product.id);
+
+		expect(foundProduct).toMatchObject({
+			id: product.id,
+			name: 'Product',
+			description: 'Description',
+			price: 10,
+			imageUrl: 'http://image.com/image.png',
+			createdAt: expect.any(Date),
+			updatedAt: expect.any(Date),
+		});
+	});
+});

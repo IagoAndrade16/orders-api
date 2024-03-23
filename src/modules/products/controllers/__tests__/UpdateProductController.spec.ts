@@ -18,6 +18,7 @@ const sampleProductDTO: UpdateProductUseCaseInput = {
 	name: 'name',
 	price: 10,
 	imageUrl: 'http://image.com/image.png',
+	userId: userId.toString(),
 };
 
 beforeAll(async () => {

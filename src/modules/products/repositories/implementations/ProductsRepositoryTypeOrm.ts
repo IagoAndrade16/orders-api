@@ -19,4 +19,8 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
     async updateById(id: string, data: UpdateProductDTO): Promise<void> {
     	await this.repository.update(id, data);
     }
+
+    async findById(id: string): Promise<Product | null> {
+    	return this.repository.findOneBy({ id });
+    }
 }

@@ -22,10 +22,12 @@ export class UpdateProductController {
     async handle(req: Request, res: Response): Promise<Response> {
     	const body = await this.body.validate(req.body, { abortEarly: false });
     	const { id: productId } = req.params;
+    	const userId = req.user!.id;
 
     	await this.updateProductUseCase.execute({
     		...body,
     		productId,
+    		userId,
     	});
 
     	return res.status(204).send();
