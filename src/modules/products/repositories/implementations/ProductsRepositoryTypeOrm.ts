@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Database } from '../../../../database/Database';
 import { Product } from '../../entities/Product';
-import { CreateProductDTO, ProductsRepository } from '../ProductsRepository';
+import { CreateProductDTO, ProductsRepository, UpdateProductDTO } from '../ProductsRepository';
 
 export class ProductsRepositoryTypeOrm implements ProductsRepository {
     private repository = Database.source.getRepository(Product);
@@ -14,5 +14,9 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
 
     	await this.repository.insert(product);
     	return product;
+    }
+
+    async updateById(id: string, data: UpdateProductDTO): Promise<void> {
+    	await this.repository.update(id, data);
     }
 }
