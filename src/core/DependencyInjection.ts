@@ -1,6 +1,8 @@
 import SftpClient from 'ssh2-sftp-client';
 import { container, InjectionToken } from 'tsyringe';
 
+import { ProductsRepositoryTypeOrm } from '../modules/products/repositories/implementations/ProductsRepositoryTypeOrm';
+import { ProductsRepository, productsRepositoryAlias } from '../modules/products/repositories/ProductsRepository';
 import { UsersRepositoryTypeOrm } from '../modules/users/repositories/implementations/UsersRepositoryTypeOrm';
 import { UsersRepository, usersRepositoryAlias } from '../modules/users/repositories/UsersRepository';
 import { ApiProvider, apiProviderAlias } from '../providers/api/ApiProvider';
@@ -25,6 +27,7 @@ export class DependencyInjection {
 		container.registerSingleton<JwtProvider>(jwtProviderAlias, JwtProviderImpl);
 		container.registerSingleton<UsersRepository>(usersRepositoryAlias, UsersRepositoryTypeOrm);
 		container.registerSingleton<DateProvider>(dateProviderAlias, DateProviderImpl);
+		container.registerSingleton<ProductsRepository>(productsRepositoryAlias, ProductsRepositoryTypeOrm);
 	}
 }
 
