@@ -3,7 +3,9 @@ import { v4 as uuid } from 'uuid';
 
 import { Database } from '../../../../database/Database';
 import { Product } from '../../entities/Product';
-import { CreateProductDTO, ProductsRepository, UpdateProductDTO } from '../ProductsRepository';
+import {
+	CreateProductDTO, FetchProductsDTO, ProductsRepository, UpdateProductDTO,
+} from '../ProductsRepository';
 
 export class ProductsRepositoryTypeOrm implements ProductsRepository {
     private repository = Database.source.getRepository(Product);
@@ -22,5 +24,10 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
 
     async findById(id: string): Promise<Product | null> {
     	return this.repository.findOneBy({ id });
+    }
+
+    async fetchItems(filters: FetchProductsDTO): Promise<Product[]> {
+    	const { page = 1, pageSize = 10 } = filters;
+    	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize });
     }
 }
