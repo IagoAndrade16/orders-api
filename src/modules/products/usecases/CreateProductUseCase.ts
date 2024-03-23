@@ -4,7 +4,9 @@ import { inject, singleton } from 'tsyringe';
 import { UseCase } from '../../../core/UseCase';
 import { CreateProductDTO, ProductsRepository, productsRepositoryAlias } from '../repositories/ProductsRepository';
 
-export type CreateProductUseCaseInput = CreateProductDTO;
+export type CreateProductUseCaseInput = CreateProductDTO & {
+	userId: string;
+};
 
 export type CreateProductUseCaseOutput = CreateProductDTO;
 

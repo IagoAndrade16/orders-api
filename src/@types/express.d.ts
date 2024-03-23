@@ -1,18 +1,7 @@
 namespace Express {
 	export type Request = {
 		user?: {
-			id: number;
+			id: string;
 		};
-
-		owner?: {
-			id: number;
-			channel: string;
-		}
-
-		subUser?: {
-			id: number;
-			channel: string;
-			adminId: number;
-		}
 	}
 }

@@ -21,9 +21,13 @@ export class CreateProductController {
     });
 
     async handle(req: Request, res: Response): Promise<Response> {
+    	const userId = req.user!.id;
     	const body = await this.body.validate(req.body, { abortEarly: false });
 
-    	const response = await this.createProductUseCase.execute(body);
+    	const response = await this.createProductUseCase.execute({
+    		...body,
+    		userId,
+    	});
 
     	return res.status(201).send(response);
     }

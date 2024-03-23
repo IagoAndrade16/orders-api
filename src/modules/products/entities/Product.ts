@@ -22,4 +22,13 @@ export class Product {
 
   @Column({ type: 'datetime', default: 'now()' })
   updatedAt: Date;
+
+  @Column({ type: 'datetime', nullable: true, default: null })
+  deletedAt: Date | null;
+
+  @Column({ type: 'boolean', default: false })
+  deleted: boolean;
+
+  @Column({ type: 'varchar', nullable: false })
+  userId: string;
 }

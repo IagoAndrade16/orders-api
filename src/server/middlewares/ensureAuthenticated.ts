@@ -13,10 +13,9 @@ export async function _ensureAuthenticated(req: Request, _res: Response, next: N
 	if (!payload) throw new DomainError(416, 'Unauthorized');
 
 	const { sub } = payload as { sub: string };
-	const subId = parseInt(sub, 10);
 
 	req.user = {
-		id: subId,
+		id: sub,
 	};
 
 	return next();

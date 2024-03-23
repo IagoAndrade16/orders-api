@@ -5,7 +5,7 @@ export type ProductsRepository = {
 	updateById(id: string, data: UpdateProductDTO): Promise<void>;
 }
 
-export type CreateProductDTO = Pick<Product, 'name' | 'description' | 'price' | 'imageUrl'>;
+export type CreateProductDTO = Pick<Product, 'name' | 'description' | 'price' | 'imageUrl' | 'userId'>;
 
 export type UpdateProductDTO = {
 	name?: string;

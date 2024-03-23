@@ -19,6 +19,7 @@ describe('insert', () => {
 			description: 'Description',
 			price: 10,
 			imageUrl: 'http://image.com/image.png',
+			userId: 'user-id',
 		});
 
 		await Database.source.getRepository('Product').delete(product.id);
@@ -42,6 +43,7 @@ describe('updateById', () => {
 			description: 'Description',
 			price: 10,
 			imageUrl: 'http://image.com/image.png',
+			userId: 'user-id',
 		});
 
 		await repository.updateById(product.id, {

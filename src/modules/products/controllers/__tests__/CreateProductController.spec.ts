@@ -43,6 +43,7 @@ describe('Return 201', () => {
 		name: 'name',
 		price: 10,
 		imageUrl: 'http://image.com/image.png',
+		userId: uuid(),
 	};
 
 	it('should call usecase', async () => {
@@ -59,6 +60,9 @@ describe('Return 201', () => {
 		expect(response.body).toEqual(product);
 
 		expect(usecase.execute).toBeCalledTimes(1);
-		expect(usecase.execute).toBeCalledWith(sampleProductDTO);
+		expect(usecase.execute).toBeCalledWith({
+			...sampleProductDTO,
+			userId: expect.any(String),
+		});
 	});
 });
