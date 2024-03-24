@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
+import { OrderProductDTO } from '../repositories/OrdersRepository';
+
 @Entity('orders')
 export class Order {
   @PrimaryColumn()
@@ -15,7 +17,7 @@ export class Order {
   userAddress: string;
 
   @Column({ type: 'json' })
-  products: Record<string, any>;
+  products: OrderProductDTO[];
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
