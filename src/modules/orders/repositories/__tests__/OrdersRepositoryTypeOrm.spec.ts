@@ -41,3 +41,38 @@ describe('create', () => {
 		expect(order.products).toEqual(newOrder.products);
 	});
 });
+
+describe('fetchItems', () => {
+	it('should fetch items', async () => {
+		const order1 = await repository.create({
+			userName: 'Product 1',
+			userAddress: 'address 1',
+			userPhone: '123456789',
+			products: [
+				{
+					productId: 'Product 1',
+					quantityOfProduct: 1,
+				},
+			],
+		});
+
+		const order2 = await repository.create({
+			userName: 'Product 2',
+			userAddress: 'address 2',
+			userPhone: '123456789',
+			products: [
+				{
+					productId: 'Product 2',
+					quantityOfProduct: 2,
+				},
+			],
+		});
+
+		const orders = await repository.fetchItems({ page: 1, pageSize: 1000 });
+
+		await Database.source.getRepository(Order).delete(order1.id);
+		await Database.source.getRepository(Order).delete(order2.id);
+
+		expect(orders.map((order) => order.id)).toContain(order1.id);
+	});
+});
