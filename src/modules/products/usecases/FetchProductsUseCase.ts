@@ -8,10 +8,12 @@ import { ProductsRepository, productsRepositoryAlias } from '../repositories/Pro
 export type FetchProductsUseCaseInput = {
 	page?: number;
 	pageSize?: number;
+	name?: string;
 }
 
 export type FetchProductsUseCaseOutput = {
 	products: Product[];
+	quantity: number;
 }
 
 @singleton()
@@ -22,8 +24,12 @@ export class FetchProductsUseCase implements UseCase<FetchProductsUseCaseInput, 
 	) {}
 
 	async execute(filters: FetchProductsUseCaseInput): Promise<FetchProductsUseCaseOutput> {
-		const products = await this.productsRepository.fetchItems(filters);
+		console.log('filters', filters);
 
-		return { products };
+		const products = await this.productsRepository.fetchItems(filters);
+		const quantity = await this.productsRepository.countItems({
+			name: filters.name,
+		});
+		return { products, quantity };
 	}
 }

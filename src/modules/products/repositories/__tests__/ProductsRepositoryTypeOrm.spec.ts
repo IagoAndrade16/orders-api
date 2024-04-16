@@ -130,6 +130,33 @@ describe('fetchItems', () => {
 
 		expect(products.map((product) => product.id)).toContain(product1.id);
 	});
+
+	describe('with name filter', () => {
+		it('should fetch items', async () => {
+			const product1 = await repository.insert({
+				name: 'Product 1',
+				description: 'Description 1',
+				price: 10,
+				imageUrl: 'http://image.com/image1.png',
+				userId: 'user-id',
+			});
+
+			const product2 = await repository.insert({
+				name: 'Product 2',
+				description: 'Description 2',
+				price: 20,
+				imageUrl: 'http://image.com/image2.png',
+				userId: 'user-id',
+			});
+
+			const products = await repository.fetchItems({ page: 1, pageSize: 1000, name: 'Product 1' });
+
+			await Database.source.getRepository('Product').delete(product1.id);
+			await Database.source.getRepository('Product').delete(product2.id);
+
+			expect(products.map((product) => product.id)).toContain(product1.id);
+		});
+	});
 });
 
 describe('delete', () => {
@@ -156,6 +183,60 @@ describe('delete', () => {
 			id: product.id,
 			deleted: true,
 			deletedAt: expect.any(Date),
+		});
+	});
+});
+
+describe('countItems', () => {
+	it('should count items', async () => {
+		const product1 = await repository.insert({
+			name: 'Product 1',
+			description: 'Description 1',
+			price: 10,
+			imageUrl: 'http://image.com/image1.png',
+			userId: 'user-id',
+		});
+
+		const product2 = await repository.insert({
+			name: 'Product 2',
+			description: 'Description 2',
+			price: 20,
+			imageUrl: 'http://image.com/image2.png',
+			userId: 'user-id',
+		});
+
+		const count = await repository.countItems({});
+
+		await Database.source.getRepository('Product').delete(product1.id);
+		await Database.source.getRepository('Product').delete(product2.id);
+
+		expect(count).toBeGreaterThanOrEqual(2);
+	});
+
+	describe('with name filter', () => {
+		it('should count items', async () => {
+			const product1 = await repository.insert({
+				name: 'Product 1',
+				description: 'Description 1',
+				price: 10,
+				imageUrl: 'http://image.com/image1.png',
+				userId: 'user-id',
+			});
+
+			const product2 = await repository.insert({
+				name: 'Product 2',
+				description: 'Description 2',
+				price: 20,
+				imageUrl: 'http://image.com/image2.png',
+				userId: 'user-id',
+			});
+
+			const count = await repository.countItems({ name: 'Product 1' });
+
+			await Database.source.getRepository('Product').delete(product1.id);
+			await Database.source.getRepository('Product').delete(product2.id);
+
+			expect(count).toBe(1);
 		});
 	});
 });

@@ -1,9 +1,11 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+import { FindManyOptions, Like } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 import { Database } from '../../../../database/Database';
 import { Product } from '../../entities/Product';
 import {
+	CountProductsDTO,
 	CreateProductDTO, FetchProductsDTO, ProductsRepository, UpdateProductDTO,
 } from '../ProductsRepository';
 
@@ -28,7 +30,13 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
 
     async fetchItems(filters: FetchProductsDTO): Promise<Product[]> {
     	const { page = 1, pageSize = 10 } = filters;
-    	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize, where: { deleted: false } });
+    	const options: FindManyOptions<Product> = { skip: (page - 1) * pageSize, take: pageSize, where: { deleted: false } };
+
+    	if (filters.name) {
+    		options.where = { ...options.where, name: Like(`%${filters.name}%`) };
+    	}
+
+    	return this.repository.find(options);
     }
 
     async delete(id: string): Promise<void> {
@@ -36,5 +44,15 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
     		deleted: true,
     		deletedAt: new Date(),
     	});
+    }
+
+    async countItems(filters: CountProductsDTO): Promise<number> {
+    	const options: FindManyOptions<Product> = { where: { deleted: false } };
+
+    	if (filters.name) {
+    		options.where = { ...options.where, name: Like(`%${filters.name}%`) };
+    	}
+
+    	return this.repository.count(options);
     }
 }

@@ -25,8 +25,15 @@ it('should return list of products', async () => {
 	];
 
 	jest.spyOn(productsRepo, 'fetchItems').mockResolvedValueOnce(products as Product[]);
+	jest.spyOn(productsRepo, 'countItems').mockResolvedValueOnce(products.length);
 
 	const result = await usecase.execute({});
 
-	expect(result).toEqual({ products });
+	expect(result).toEqual({ products, quantity: products.length });
+
+	expect(productsRepo.fetchItems).toHaveBeenCalledTimes(1);
+	expect(productsRepo.fetchItems).toHaveBeenCalledWith({});
+
+	expect(productsRepo.countItems).toHaveBeenCalledTimes(1);
+	expect(productsRepo.countItems).toHaveBeenCalledWith({ name: undefined });
 });

@@ -11,5 +11,5 @@ export const productsRouter = Router();
 
 productsRouter.post('/', _ensureAuthenticated, (req, res) => find(CreateProductController).handle(req, res));
 productsRouter.patch('/:id', _ensureAuthenticated, (req, res) => find(UpdateProductController).handle(req, res));
-productsRouter.get('/', (req, res) => find(FetchProductsController).handle(req, res));
+productsRouter.post('/list', (req, res) => find(FetchProductsController).handle(req, res));
 productsRouter.delete('/:id', _ensureAuthenticated, (req, res) => find(DeleteProductController).handle(req, res));

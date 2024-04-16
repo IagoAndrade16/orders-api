@@ -12,7 +12,7 @@ let authToken: string;
 const userId = -1;
 const page = 1;
 const pageSize = 10;
-const route = `/product?page=${page}&pageSize=${pageSize}`;
+const route = `/product/list?page=${page}&pageSize=${pageSize}`;
 
 const usecase = find(FetchProductsUseCase);
 
@@ -25,19 +25,22 @@ describe('Return 200', () => {
 		const product = { id: uuid() } as Product;
 		jest.spyOn(usecase, 'execute').mockResolvedValue({
 			products: [product],
+			quantity: 1,
 		});
 
-		const response = await request(app).get(route).send();
+		const response = await request(app).post(route).send();
 
 		expect(response.status).toBe(200);
 		expect(response.body).toEqual({
 			products: [product],
+			quantity: 1,
 		});
 
 		expect(usecase.execute).toBeCalledTimes(1);
 		expect(usecase.execute).toBeCalledWith({
 			page,
 			pageSize,
+			name: undefined,
 		});
 	});
 });
