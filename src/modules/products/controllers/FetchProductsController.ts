@@ -25,7 +25,7 @@ export class FetchProductsController {
 			name,
 		});
 
-		console.log('fetchedProducts', fetchedProducts.quantity);
+		// console.log('fetchedProducts', fetchedProducts.quantity);
 
 		return res.status(200).send(fetchedProducts);
 	}

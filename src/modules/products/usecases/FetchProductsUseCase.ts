@@ -24,7 +24,7 @@ export class FetchProductsUseCase implements UseCase<FetchProductsUseCaseInput, 
 	) {}
 
 	async execute(filters: FetchProductsUseCaseInput): Promise<FetchProductsUseCaseOutput> {
-		console.log('filters', filters);
+		// console.log('filters', filters);
 
 		const products = await this.productsRepository.fetchItems(filters);
 		const quantity = await this.productsRepository.countItems({

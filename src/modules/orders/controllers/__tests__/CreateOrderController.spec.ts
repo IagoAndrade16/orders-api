@@ -41,12 +41,18 @@ describe('Return 201', () => {
 
 	it('should call usecase', async () => {
 		const order = { id: uuid() } as Order;
-		jest.spyOn(usecase, 'execute').mockResolvedValue(order);
+		jest.spyOn(usecase, 'execute').mockResolvedValue({
+			orderId: order.id,
+			...sampleOrderDTO,
+		});
 
 		const response = await request(app).post(route).send(sampleOrderDTO);
 
 		expect(response.status).toBe(201);
-		expect(response.body).toEqual(order);
+		expect(response.body).toEqual({
+			orderId: order.id,
+			...sampleOrderDTO,
+		});
 
 		expect(usecase.execute).toBeCalledTimes(1);
 		expect(usecase.execute).toBeCalledWith(sampleOrderDTO);

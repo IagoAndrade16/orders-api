@@ -6,7 +6,9 @@ import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../repo
 
 export type CreateOrderUseCaseInput = CreateOrderDTO;
 
-export type CreateOrderUseCaseOutput = CreateOrderDTO;
+export type CreateOrderUseCaseOutput = CreateOrderDTO & {
+	orderId: string;
+};
 
 @singleton()
 export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, CreateOrderUseCaseOutput> {
@@ -25,6 +27,7 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 			userAddress: orderCreated.userAddress,
 			userName: orderCreated.userName,
 			userPhone: orderCreated.userPhone,
+			orderId: orderCreated.id,
 		};
 	}
 }

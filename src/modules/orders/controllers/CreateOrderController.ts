@@ -27,6 +27,6 @@ export class CreateOrderController {
 
     	const response = await this.createOrderUseCase.execute(body);
 
-    	return res.status(201).send(response);
+    	return res.status(201).send({ ...response });
     }
 }
