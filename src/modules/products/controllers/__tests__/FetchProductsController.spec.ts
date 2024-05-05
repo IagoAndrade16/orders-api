@@ -6,10 +6,9 @@ import { app } from '../../../../server/app';
 import { TestUtils } from '../../../../utils/TestUtils';
 import { Product } from '../../entities/Product';
 import { FetchProductsUseCase } from '../../usecases/FetchProductsUseCase';
-import { UpdateProductUseCase, UpdateProductUseCaseInput } from '../../usecases/UpdateProductUseCase';
 
 let authToken: string;
-const userId = -1;
+const userId = '-1';
 const page = 1;
 const pageSize = 10;
 const route = `/product/list?page=${page}&pageSize=${pageSize}`;

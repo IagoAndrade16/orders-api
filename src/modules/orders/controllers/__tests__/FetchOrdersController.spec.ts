@@ -8,7 +8,7 @@ import { Order } from '../../entities/Order';
 import { FetchOrdersUseCase } from '../../usecases/FetchOrdersUseCase';
 
 let authToken: string;
-const userId = -1;
+const userId = '-1';
 const page = 1;
 const pageSize = 10;
 const route = `/orders?page=${page}&pageSize=${pageSize}`;

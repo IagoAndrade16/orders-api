@@ -2,7 +2,7 @@ import { find } from '../core/DependencyInjection';
 import { JwtProvider, jwtProviderAlias } from '../providers/jwt/JwtProvider';
 
 export class TestUtils {
-	static async generateAuthToken(userId?: number, isAdmin?: boolean, isEditor?: boolean): Promise<string> {
+	static async generateAuthToken(userId?: string, isAdmin?: boolean, isEditor?: boolean): Promise<string> {
 		const jwtProvider = find<JwtProvider>(jwtProviderAlias);
 
 		const data = {};

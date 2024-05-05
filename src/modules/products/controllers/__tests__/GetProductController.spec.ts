@@ -8,7 +8,7 @@ import { Product } from '../../entities/Product';
 import { GetProductUseCase, GetProductUseCaseInput } from '../../usecases/GetProductUseCase';
 
 let authToken: string;
-const userId = -1;
+const userId = '-1';
 const route = '/product/:id';
 
 const usecase = find(GetProductUseCase);

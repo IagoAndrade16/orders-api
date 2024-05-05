@@ -18,4 +18,8 @@ export class OrdersRepositoryTypeOrm implements OrdersRepository {
   	const { page = 1, pageSize = 10 } = filters;
   	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize });
   }
+
+  async findById(id: string): Promise<Order | null> {
+  	return this.repository.findOne({ where: { id } });
+  }
 }

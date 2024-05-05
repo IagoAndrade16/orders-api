@@ -1,7 +1,7 @@
 import { find } from '../../../../core/DependencyInjection';
 import { Database } from '../../../../database/Database';
 import { Order } from '../../entities/Order';
-import { OrdersRepository, ordersRepositoryAlias } from '../OrdersRepository';
+import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../OrdersRepository';
 
 const repository = find<OrdersRepository>(ordersRepositoryAlias);
 
@@ -74,5 +74,39 @@ describe('fetchItems', () => {
 		await Database.source.getRepository(Order).delete(order2.id);
 
 		expect(orders.map((order) => order.id)).toContain(order1.id);
+	});
+});
+
+describe('findById', () => {
+	it('should return null if order not exists', async () => {
+		const order = await repository.findById('non-existing-id');
+
+		expect(order).toBeNull();
+	});
+
+	it('should return order if founded', async () => {
+		const newOrder: CreateOrderDTO = {
+			userName: 'John Doe',
+			userPhone: '123456789',
+			products: [
+				{
+					productId: 'Product 1',
+					quantityOfProduct: 1,
+				},
+				{
+					productId: 'Product 2',
+					quantityOfProduct: 2,
+				},
+			],
+			userAddress: 'John Doe Street',
+		};
+
+		const insertedOrder = await repository.create(newOrder);
+
+		const order = await repository.findById(insertedOrder.id);
+
+		await Database.source.getRepository(Order).delete(insertedOrder.id);
+
+		expect(order).toMatchObject(insertedOrder);
 	});
 });

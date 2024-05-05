@@ -8,7 +8,7 @@ import { Product } from '../../entities/Product';
 import { CreateProductUseCase, CreateProductUseCaseInput } from '../../usecases/CreateProductUseCase';
 
 let authToken: string;
-const userId = -1;
+const userId = '-1';
 const route = '/product';
 
 beforeAll(async () => {

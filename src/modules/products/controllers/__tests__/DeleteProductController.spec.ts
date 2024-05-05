@@ -1,14 +1,12 @@
 import request from 'supertest';
-import { v4 as uuid } from 'uuid';
 
 import { find } from '../../../../core/DependencyInjection';
 import { app } from '../../../../server/app';
 import { TestUtils } from '../../../../utils/TestUtils';
-import { Product } from '../../entities/Product';
-import { DeleteProductUseCase, DeleteProductUseCaseInput } from '../../usecases/DeleteProductUseCase';
+import { DeleteProductUseCase } from '../../usecases/DeleteProductUseCase';
 
 let authToken: string;
-const userId = -1;
+const userId = '-1';
 const route = '/product/:id';
 
 beforeAll(async () => {

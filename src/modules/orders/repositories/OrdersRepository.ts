@@ -3,6 +3,7 @@ import { Order } from '../entities/Order';
 export type OrdersRepository = {
 	create(data: CreateOrderDTO): Promise<Order>;
 	fetchItems(filters: FetchItemsDTO): Promise<Order[]>;
+	findById(id: string): Promise<Order | null>;
 }
 
 export const ordersRepositoryAlias = 'OrdersRepository';
