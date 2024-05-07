@@ -12,7 +12,7 @@ export type AuthUserInput = {
 
 export type AuthUserOutput = {
 	auth: UserAuthData;
-	user: Pick<User, 'id' | 'email' | 'name' | 'createdAt'>;
+	user: Pick<User, 'id' | 'email' | 'name' | 'createdAt' | 'isOwner'>;
 }
 
 @singleton()
@@ -44,6 +44,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInput, AuthUserOutput> {
 				email: user.email,
 				name: user.name,
 				createdAt: user.createdAt,
+				isOwner: user.isOwner,
 			},
 		};
 	}
