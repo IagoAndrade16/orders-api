@@ -27,6 +27,7 @@ describe('Return 201', () => {
 		userName: 'John Doe',
 		userPhone: '123456789',
 		userAddress: 'John Doe Street',
+		userEmail: 'email@email.com',
 		products: [
 			{
 				productId: 'Product 1',

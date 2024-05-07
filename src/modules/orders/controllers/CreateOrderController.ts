@@ -15,6 +15,7 @@ export class CreateOrderController {
     private body = yup.object().shape({
     	userName: yup.string().required().max(100),
     	userPhone: yup.string().required().max(45),
+    	userEmail: yup.string().email().required().max(100),
     	userAddress: yup.string().required(),
     	products: yup.array().of(yup.object().shape({
     		productId: yup.string().required(),

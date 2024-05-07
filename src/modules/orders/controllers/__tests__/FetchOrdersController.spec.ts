@@ -11,7 +11,7 @@ let authToken: string;
 const userId = '-1';
 const page = 1;
 const pageSize = 10;
-const route = `/orders?page=${page}&pageSize=${pageSize}`;
+const route = `/orders/fetch?page=${page}&pageSize=${pageSize}`;
 
 const usecase = find(FetchOrdersUseCase);
 
@@ -21,7 +21,7 @@ beforeAll(async () => {
 
 describe('Schema validation', () => {
 	it('should return 400 if pageSize is not a number', async () => {
-		const response = await request(app).get('/orders?pageSize=2').send().set({ });
+		const response = await request(app).post('/orders/fetch?pageSize=2').send().set({ });
 
 		expect(response.status).toBe(416);
 	});
@@ -34,7 +34,7 @@ describe('Return 200', () => {
 			orders: [order],
 		});
 
-		const response = await request(app).get(route).send().set({ Authorization: authToken });
+		const response = await request(app).post(route).send().set({ Authorization: authToken });
 
 		expect(response.status).toBe(200);
 		expect(response.body).toEqual({

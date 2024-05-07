@@ -21,11 +21,12 @@ describe('Return 200', () => {
 
 	it('should call usecase', async () => {
 		jest.spyOn(usecase, 'execute').mockResolvedValue({
-			createdAt: new Date(),
+			createdAt: '2021-09-01T00:00:00.000Z',
 			userAddress: 'address',
 			userName: 'name',
 			products: [],
 			userPhone: 'phone',
+			id: '1',
 		} as GetSingleOrderUseCaseOutput);
 
 		const response = await request(app).get(route.replace(':id', '1')).set({
@@ -35,6 +36,7 @@ describe('Return 200', () => {
 		expect(response.status).toBe(200);
 		expect(response.body).toEqual({
 			createdAt: expect.any(String),
+			id: '1',
 			userAddress: 'address',
 			userName: 'name',
 			userPhone: 'phone',

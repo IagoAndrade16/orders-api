@@ -26,6 +26,7 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 			products: orderCreated.products,
 			userAddress: orderCreated.userAddress,
 			userName: orderCreated.userName,
+			userEmail: orderCreated.userEmail,
 			userPhone: orderCreated.userPhone,
 			orderId: orderCreated.id,
 		};

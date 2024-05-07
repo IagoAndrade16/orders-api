@@ -26,7 +26,7 @@ export type GetSingleOrderUseCaseOutput = Pick<Order, 'id' | 'userAddress' | 'us
 }
 
 @singleton()
-export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput, GetSingleOrderUseCaseOutput> {
+export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput, GetSingleOrderUseCaseOutput | null> {
 	constructor(
     @inject(ordersRepositoryAlias)
     private readonly ordersRepository: OrdersRepository,
@@ -35,11 +35,11 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
     private readonly productsRepository: ProductsRepository,
 	) {}
 
-	async execute(input: GetSingleOrderUseCaseInput): Promise<GetSingleOrderUseCaseOutput> {
+	async execute(input: GetSingleOrderUseCaseInput): Promise<GetSingleOrderUseCaseOutput | null> {
 		const order = await this.ordersRepository.findById(input.orderId);
 
 		if (!order) {
-			throw new DomainError(404, 'ORDER_NOT_FOUND');
+			return null;
 		}
 
 		const products: Product[] = [];
@@ -63,7 +63,7 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 					name: product.name,
 					price: product.price,
 					quantity: order.products.filter((p) => p.productId === product.id)[0].quantityOfProduct,
-					imgUrl: product.imageUrl,
+					imgUrl: product.imageUrl ?? '',
 				};
 			}),
 		};

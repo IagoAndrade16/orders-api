@@ -10,13 +10,12 @@ const usecase = find(GetSingleOrderUseCase);
 const ordersRepo = find<OrdersRepository>(ordersRepositoryAlias);
 const productsRepo = find<ProductsRepository>(productsRepositoryAlias);
 
-it('should throw ORDER_NOT_FOUND if order not exits', () => {
+it('should return null if order not exists', async () => {
 	jest.spyOn(ordersRepo, 'findById').mockResolvedValueOnce(null);
 
-	expect(async () => {
-		await usecase.execute({ orderId: '1' });
-	}).rejects.toEqual(new DomainError(404, 'ORDER_NOT_FOUND'));
+	const res =	await usecase.execute({ orderId: '1' });
 
+	expect(res).toBeNull();
 	expect(ordersRepo.findById).toBeCalledWith('1');
 	expect(ordersRepo.findById).toBeCalledTimes(1);
 });
@@ -37,12 +36,16 @@ it('should return order with products', async () => {
 	const result = await usecase.execute({ orderId: '1' });
 
 	expect(result).toEqual({
-		createdAt: expect.any(Date),
+		createdAt: expect.any(String),
 		userAddress: 'address',
 		userName: 'name',
 		userPhone: 'phone',
 		products: [{
 			id: '1',
+			imgUrl: '',
+			name: undefined,
+			price: undefined,
+			quantity: 1,
 		}],
 	});
 

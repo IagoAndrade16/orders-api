@@ -16,6 +16,9 @@ export class Order {
   @Column({ type: 'text' })
   userAddress: string;
 
+  @Column({ type: 'varchar', length: 100 })
+  userEmail: string;
+
   @Column({ type: 'json' })
   products: OrderProductDTO[];
 

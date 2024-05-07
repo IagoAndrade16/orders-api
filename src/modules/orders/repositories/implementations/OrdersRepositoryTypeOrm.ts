@@ -1,4 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+import { FindOptionsWhere } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 import { Database } from '../../../../database/Database';
@@ -16,7 +17,13 @@ export class OrdersRepositoryTypeOrm implements OrdersRepository {
 
   async fetchItems(filters: FetchItemsDTO): Promise<Order[]> {
   	const { page = 1, pageSize = 10 } = filters;
-  	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize });
+  	const whereOptions: FindOptionsWhere<Order> = {};
+
+  	if (filters.email) {
+  		whereOptions.userEmail = filters.email;
+  	}
+
+  	return this.repository.find({ skip: (page - 1) * pageSize, take: pageSize, where: whereOptions });
   }
 
   async findById(id: string): Promise<Order | null> {

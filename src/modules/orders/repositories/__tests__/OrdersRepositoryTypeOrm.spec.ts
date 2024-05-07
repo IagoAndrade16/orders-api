@@ -19,6 +19,7 @@ describe('create', () => {
 			userName: 'John Doe',
 			userPhone: '123456789',
 			userAddress: 'John Doe Street',
+			userEmail: 'email@email.com',
 			products: [
 				{
 					productId: 'Product 1',
@@ -47,6 +48,7 @@ describe('fetchItems', () => {
 		const order1 = await repository.create({
 			userName: 'Product 1',
 			userAddress: 'address 1',
+			userEmail: 'email@email.com',
 			userPhone: '123456789',
 			products: [
 				{
@@ -59,6 +61,7 @@ describe('fetchItems', () => {
 		const order2 = await repository.create({
 			userName: 'Product 2',
 			userAddress: 'address 2',
+			userEmail: 'email@email.com',
 			userPhone: '123456789',
 			products: [
 				{
@@ -75,6 +78,43 @@ describe('fetchItems', () => {
 
 		expect(orders.map((order) => order.id)).toContain(order1.id);
 	});
+
+	describe('when filters by email', () => {
+		it('should return orders with email provided', async () => {
+			const order1 = await repository.create({
+				userName: 'Product 1',
+				userAddress: 'address 1',
+				userEmail: 'email@email.com',
+				userPhone: '123456789',
+				products: [
+					{
+						productId: 'Product 1',
+						quantityOfProduct: 1,
+					},
+				],
+			});
+
+			const order2 = await repository.create({
+				userName: 'Product 2',
+				userAddress: 'address 2',
+				userEmail: 'email1@email.com',
+				userPhone: '123456789',
+				products: [
+					{
+						productId: 'Product 2',
+						quantityOfProduct: 2,
+					},
+				],
+			});
+
+			const orders = await repository.fetchItems({ page: 1, pageSize: 1000, email: order1.userEmail });
+
+			await Database.source.getRepository(Order).delete(order1.id);
+			await Database.source.getRepository(Order).delete(order2.id);
+
+			expect(orders.map((order) => order.id)).toContain(order1.id);
+		});
+	});
 });
 
 describe('findById', () => {
@@ -88,6 +128,7 @@ describe('findById', () => {
 		const newOrder: CreateOrderDTO = {
 			userName: 'John Doe',
 			userPhone: '123456789',
+			userEmail: 'email@email.com',
 			products: [
 				{
 					productId: 'Product 1',

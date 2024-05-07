@@ -11,6 +11,7 @@ export const ordersRepositoryAlias = 'OrdersRepository';
 export type CreateOrderDTO = {
 	userName: string;
 	userPhone: string;
+	userEmail: string;
 	userAddress: string;
 	products: OrderProductDTO[];
 }
@@ -23,4 +24,5 @@ export type OrderProductDTO = {
 export type FetchItemsDTO = {
 	page?: number;
 	pageSize?: number;
+	email?: string;
 }
