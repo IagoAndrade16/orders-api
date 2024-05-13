@@ -1,6 +1,6 @@
 import { find } from '../../../../core/DependencyInjection';
 import { Database } from '../../../../database/Database';
-import { Order } from '../../entities/Order';
+import { Order, OrderPaymentMethod } from '../../entities/Order';
 import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../OrdersRepository';
 
 const repository = find<OrdersRepository>(ordersRepositoryAlias);
@@ -20,6 +20,7 @@ describe('create', () => {
 			userPhone: '123456789',
 			userAddress: 'John Doe Street',
 			userEmail: 'email@email.com',
+			paymentMethod: OrderPaymentMethod.CASH,
 			products: [
 				{
 					productId: 'Product 1',
@@ -50,6 +51,8 @@ describe('fetchItems', () => {
 			userAddress: 'address 1',
 			userEmail: 'email@email.com',
 			userPhone: '123456789',
+			paymentMethod: OrderPaymentMethod.CASH,
+
 			products: [
 				{
 					productId: 'Product 1',
@@ -63,6 +66,8 @@ describe('fetchItems', () => {
 			userAddress: 'address 2',
 			userEmail: 'email@email.com',
 			userPhone: '123456789',
+			paymentMethod: OrderPaymentMethod.CASH,
+
 			products: [
 				{
 					productId: 'Product 2',
@@ -86,6 +91,8 @@ describe('fetchItems', () => {
 				userAddress: 'address 1',
 				userEmail: 'email@email.com',
 				userPhone: '123456789',
+				paymentMethod: OrderPaymentMethod.CASH,
+
 				products: [
 					{
 						productId: 'Product 1',
@@ -99,6 +106,7 @@ describe('fetchItems', () => {
 				userAddress: 'address 2',
 				userEmail: 'email1@email.com',
 				userPhone: '123456789',
+				paymentMethod: OrderPaymentMethod.CASH,
 				products: [
 					{
 						productId: 'Product 2',
@@ -129,6 +137,7 @@ describe('findById', () => {
 			userName: 'John Doe',
 			userPhone: '123456789',
 			userEmail: 'email@email.com',
+			paymentMethod: OrderPaymentMethod.CASH,
 			products: [
 				{
 					productId: 'Product 1',

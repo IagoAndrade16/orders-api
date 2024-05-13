@@ -1,4 +1,4 @@
-import { Order } from '../entities/Order';
+import { Order, OrderPaymentMethod } from '../entities/Order';
 
 export type OrdersRepository = {
 	create(data: CreateOrderDTO): Promise<Order>;
@@ -14,6 +14,7 @@ export type CreateOrderDTO = {
 	userEmail: string;
 	userAddress: string;
 	products: OrderProductDTO[];
+	paymentMethod: OrderPaymentMethod
 }
 
 export type OrderProductDTO = {

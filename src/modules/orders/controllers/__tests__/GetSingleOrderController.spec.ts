@@ -3,6 +3,7 @@ import request from 'supertest';
 import { find } from '../../../../core/DependencyInjection';
 import { app } from '../../../../server/app';
 import { TestUtils } from '../../../../utils/TestUtils';
+import { OrderPaymentMethod } from '../../entities/Order';
 import { GetSingleOrderUseCase, GetSingleOrderUseCaseInput, GetSingleOrderUseCaseOutput } from '../../usecases/GetSingleOrderUseCase';
 
 const route = '/orders/:id';
@@ -24,8 +25,10 @@ describe('Return 200', () => {
 			createdAt: '2021-09-01T00:00:00.000Z',
 			userAddress: 'address',
 			userName: 'name',
+			userEmail: 'email',
 			products: [],
 			userPhone: 'phone',
+			paymentMethod: OrderPaymentMethod.CASH,
 			id: '1',
 		} as GetSingleOrderUseCaseOutput);
 
@@ -40,6 +43,8 @@ describe('Return 200', () => {
 			userAddress: 'address',
 			userName: 'name',
 			userPhone: 'phone',
+			paymentMethod: OrderPaymentMethod.CASH,
+			userEmail: 'email',
 			products: [],
 		});
 

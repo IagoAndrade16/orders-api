@@ -14,7 +14,7 @@ export type GetSingleOrderUseCaseInput = {
 	orderId: string;
 }
 
-export type GetSingleOrderUseCaseOutput = Pick<Order, 'id' | 'userAddress' | 'userName' | 'userPhone'> & {
+export type GetSingleOrderUseCaseOutput = Pick<Order, 'id' | 'userAddress' | 'userName' | 'userPhone' | 'paymentMethod' | 'userEmail'> & {
 	products: {
 		id: string;
 		name: string;
@@ -56,7 +56,9 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 			createdAt: moment(order.createdAt).format('DD/MM/YYYY HH:mm:ss'),
 			userAddress: order.userAddress,
 			userName: order.userName,
+			userEmail: order.userEmail,
 			userPhone: order.userPhone,
+			paymentMethod: order.paymentMethod,
 			products: products.map((product) => {
 				return {
 					id: product.id,

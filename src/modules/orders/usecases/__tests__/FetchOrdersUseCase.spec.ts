@@ -1,5 +1,5 @@
 import { find } from '../../../../core/DependencyInjection';
-import { Order } from '../../entities/Order';
+import { Order, OrderPaymentMethod } from '../../entities/Order';
 import { OrdersRepository, ordersRepositoryAlias } from '../../repositories/OrdersRepository';
 import { FetchOrdersUseCase } from '../FetchOrdersUseCase';
 import { GetSingleOrderUseCase } from '../GetSingleOrderUseCase';
@@ -36,6 +36,8 @@ it('should return list of orders', async () => {
 		userPhone: orders[0].userPhone,
 		userAddress: orders[0].userAddress,
 		createdAt: expect.any(String),
+		paymentMethod: OrderPaymentMethod.CASH,
+		userEmail: 'email',
 		products: [
 			{
 				id: 'Product 1',

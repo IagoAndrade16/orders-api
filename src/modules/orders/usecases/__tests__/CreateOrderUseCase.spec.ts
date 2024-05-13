@@ -1,5 +1,5 @@
 import { find } from '../../../../core/DependencyInjection';
-import { Order } from '../../entities/Order';
+import { Order, OrderPaymentMethod } from '../../entities/Order';
 import { OrdersRepository, ordersRepositoryAlias } from '../../repositories/OrdersRepository';
 import { CreateOrderUseCase, CreateOrderUseCaseInput } from '../CreateOrderUseCase';
 
@@ -12,6 +12,7 @@ const mockedOrder = {
 	userName: 'John Doe',
 	userPhone: '123456789',
 	userEmail: 'email@email.com',
+	paymentMethod: OrderPaymentMethod.CREDIT_CARD,
 } as CreateOrderUseCaseInput;
 
 it('should create a order', async () => {

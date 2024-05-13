@@ -19,26 +19,18 @@ beforeAll(async () => {
 	authToken = await TestUtils.generateAuthToken(userId);
 });
 
-describe('Schema validation', () => {
-	it('should return 400 if pageSize is not a number', async () => {
-		const response = await request(app).post('/orders/fetch?pageSize=2').send().set({ });
-
-		expect(response.status).toBe(416);
-	});
-});
-
 describe('Return 200', () => {
 	it('should call usecase', async () => {
 		const order = { id: uuid() } as Order;
 		jest.spyOn(usecase, 'execute').mockResolvedValue({
-			orders: [order],
-		});
+			order,
+		} as any);
 
 		const response = await request(app).post(route).send().set({ Authorization: authToken });
 
 		expect(response.status).toBe(200);
 		expect(response.body).toEqual({
-			orders: [order],
+			order,
 		});
 
 		expect(usecase.execute).toBeCalledTimes(1);

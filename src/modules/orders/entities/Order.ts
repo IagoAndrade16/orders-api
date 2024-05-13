@@ -2,6 +2,12 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 import { OrderProductDTO } from '../repositories/OrdersRepository';
 
+export enum OrderPaymentMethod {
+	CASH = 'cash',
+	CREDIT_CARD = 'credit-card',
+	PIX = 'pix',
+	DEBIT_CARD = 'debit-card',
+}
 @Entity('orders')
 export class Order {
   @PrimaryColumn()
@@ -27,4 +33,7 @@ export class Order {
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
+
+  @Column({ type: 'enum', enum: OrderPaymentMethod, nullable: true })
+  paymentMethod: OrderPaymentMethod;
 }
