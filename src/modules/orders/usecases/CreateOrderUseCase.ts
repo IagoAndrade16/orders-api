@@ -2,6 +2,7 @@
 import { inject, singleton } from 'tsyringe';
 
 import { UseCase } from '../../../core/UseCase';
+import { OrderStatus } from '../entities/Order';
 import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../repositories/OrdersRepository';
 
 export type CreateOrderUseCaseInput = CreateOrderDTO;
@@ -20,6 +21,7 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 	async execute(input: CreateOrderUseCaseInput): Promise<CreateOrderUseCaseOutput> {
 		const orderCreated = await this.ordersRepository.create({
 			...input,
+			status: OrderStatus.PREPARE_LIST,
 		});
 
 		return {
@@ -30,6 +32,7 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 			userPhone: orderCreated.userPhone,
 			orderId: orderCreated.id,
 			paymentMethod: orderCreated.paymentMethod,
+			status: orderCreated.status,
 		};
 	}
 }

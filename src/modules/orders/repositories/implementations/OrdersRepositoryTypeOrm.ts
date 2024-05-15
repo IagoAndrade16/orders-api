@@ -29,4 +29,8 @@ export class OrdersRepositoryTypeOrm implements OrdersRepository {
   async findById(id: string): Promise<Order | null> {
   	return this.repository.findOne({ where: { id } });
   }
+
+  async updateById(id: string, data: Partial<Order>): Promise<void> {
+  	await this.repository.update({ id }, data);
+  }
 }

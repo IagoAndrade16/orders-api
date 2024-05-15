@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 import { OrderProductDTO } from '../repositories/OrdersRepository';
@@ -8,6 +9,13 @@ export enum OrderPaymentMethod {
 	PIX = 'pix',
 	DEBIT_CARD = 'debit-card',
 }
+
+export enum OrderStatus {
+	PREPARE_LIST = 'Em preparação',
+	DELIVERY_ROUTE = 'Rota de entrega',
+	FINISHED = 'Entregue'
+}
+
 @Entity('orders')
 export class Order {
   @PrimaryColumn()
@@ -36,4 +44,9 @@ export class Order {
 
   @Column({ type: 'enum', enum: OrderPaymentMethod, nullable: true })
   paymentMethod: OrderPaymentMethod;
+
+  @Column({
+  	type: 'varchar', length: 255, nullable: true, enum: OrderStatus,
+  })
+  status: OrderStatus;
 }

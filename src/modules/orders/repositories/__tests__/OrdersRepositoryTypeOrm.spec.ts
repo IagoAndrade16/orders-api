@@ -160,3 +160,26 @@ describe('findById', () => {
 		expect(order).toMatchObject(insertedOrder);
 	});
 });
+
+describe('updateById', () => {
+	it('should update order', async () => {
+		const order: CreateOrderDTO = {
+			userName: 'John Doe',
+			userPhone: '123456789',
+			paymentMethod: OrderPaymentMethod.CASH,
+			userEmail: 'iago@email.com',
+			userAddress: 'John Doe Street',
+			products: [],
+		};
+
+		const insertedOrder = await repository.create(order);
+
+		await repository.updateById(insertedOrder.id, { userName: 'Iago' });
+
+		const updatedOrder = await repository.findById(insertedOrder.id);
+
+		await Database.source.getRepository(Order).delete(insertedOrder.id);
+
+		expect(updatedOrder?.userName).toBe('Iago');
+	});
+});
