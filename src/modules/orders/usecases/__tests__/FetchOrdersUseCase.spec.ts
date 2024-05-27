@@ -1,5 +1,5 @@
 import { find } from '../../../../core/DependencyInjection';
-import { Order, OrderPaymentMethod } from '../../entities/Order';
+import { Order, OrderPaymentMethod, OrderStatus } from '../../entities/Order';
 import { OrdersRepository, ordersRepositoryAlias } from '../../repositories/OrdersRepository';
 import { FetchOrdersUseCase } from '../FetchOrdersUseCase';
 import { GetSingleOrderUseCase } from '../GetSingleOrderUseCase';
@@ -38,6 +38,7 @@ it('should return list of orders', async () => {
 		createdAt: expect.any(String),
 		paymentMethod: OrderPaymentMethod.CASH,
 		userEmail: 'email',
+		status: OrderStatus.DELIVERY_ROUTE,
 		products: [
 			{
 				id: 'Product 1',

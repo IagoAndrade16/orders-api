@@ -2,6 +2,7 @@
 import { inject, singleton } from 'tsyringe';
 
 import { UseCase } from '../../../core/UseCase';
+import { ProductsReportRepository, productsReportRepositoryAlias } from '../../products/repositories/ProductsReportRepository';
 import { OrderStatus } from '../entities/Order';
 import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../repositories/OrdersRepository';
 
@@ -16,6 +17,9 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 	constructor(
     @inject(ordersRepositoryAlias)
     private readonly ordersRepository: OrdersRepository,
+
+		@inject(productsReportRepositoryAlias)
+		private readonly productsReportRepository: ProductsReportRepository,
 	) {}
 
 	async execute(input: CreateOrderUseCaseInput): Promise<CreateOrderUseCaseOutput> {
@@ -23,6 +27,15 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 			...input,
 			status: OrderStatus.PREPARE_LIST,
 		});
+
+		const promises = input.products.map(async (product) => {
+			return this.productsReportRepository.insert({
+				productId: product.productId,
+				quantity: product.quantityOfProduct,
+			});
+		});
+
+		await Promise.all(promises);
 
 		return {
 			products: orderCreated.products,

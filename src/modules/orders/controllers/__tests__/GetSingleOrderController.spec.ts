@@ -3,7 +3,7 @@ import request from 'supertest';
 import { find } from '../../../../core/DependencyInjection';
 import { app } from '../../../../server/app';
 import { TestUtils } from '../../../../utils/TestUtils';
-import { OrderPaymentMethod } from '../../entities/Order';
+import { OrderPaymentMethod, OrderStatus } from '../../entities/Order';
 import { GetSingleOrderUseCase, GetSingleOrderUseCaseInput, GetSingleOrderUseCaseOutput } from '../../usecases/GetSingleOrderUseCase';
 
 const route = '/orders/:id';
@@ -30,6 +30,7 @@ describe('Return 200', () => {
 			userPhone: 'phone',
 			paymentMethod: OrderPaymentMethod.CASH,
 			id: '1',
+			status: OrderStatus.DELIVERY_ROUTE,
 		} as GetSingleOrderUseCaseOutput);
 
 		const response = await request(app).get(route.replace(':id', '1')).set({
@@ -46,6 +47,7 @@ describe('Return 200', () => {
 			paymentMethod: OrderPaymentMethod.CASH,
 			userEmail: 'email',
 			products: [],
+			status: OrderStatus.DELIVERY_ROUTE,
 		});
 
 		expect(usecase.execute).toBeCalledTimes(1);

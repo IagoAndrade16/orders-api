@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { find } from '../../../../core/DependencyInjection';
 import { app } from '../../../../server/app';
-import { Order, OrderPaymentMethod } from '../../entities/Order';
+import { Order, OrderPaymentMethod, OrderStatus } from '../../entities/Order';
 import { CreateOrderUseCase, CreateOrderUseCaseInput } from '../../usecases/CreateOrderUseCase';
 
 const route = '/orders';
@@ -29,6 +29,7 @@ describe('Return 201', () => {
 		userAddress: 'John Doe Street',
 		userEmail: 'email@email.com',
 		paymentMethod: OrderPaymentMethod.CASH,
+		status: OrderStatus.DELIVERY_ROUTE,
 		products: [
 			{
 				productId: 'Product 1',

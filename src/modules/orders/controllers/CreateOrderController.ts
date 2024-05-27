@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import * as yup from 'yup';
 
-import { OrderPaymentMethod } from '../entities/Order';
+import { OrderPaymentMethod, OrderStatus } from '../entities/Order';
 import { CreateOrderUseCase } from '../usecases/CreateOrderUseCase';
 
 @injectable()
@@ -31,6 +31,7 @@ export class CreateOrderController {
     	const response = await this.createOrderUseCase.execute({
     		...body,
     		paymentMethod: body.paymentMethod as OrderPaymentMethod,
+    		status: OrderStatus.DELIVERY_ROUTE,
     	});
 
     	return res.status(201).send({ ...response });

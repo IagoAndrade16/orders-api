@@ -1,6 +1,6 @@
 import { find } from '../../../../core/DependencyInjection';
 import { Database } from '../../../../database/Database';
-import { Order, OrderPaymentMethod } from '../../entities/Order';
+import { Order, OrderPaymentMethod, OrderStatus } from '../../entities/Order';
 import { CreateOrderDTO, OrdersRepository, ordersRepositoryAlias } from '../OrdersRepository';
 
 const repository = find<OrdersRepository>(ordersRepositoryAlias);
@@ -21,6 +21,7 @@ describe('create', () => {
 			userAddress: 'John Doe Street',
 			userEmail: 'email@email.com',
 			paymentMethod: OrderPaymentMethod.CASH,
+			status: OrderStatus.DELIVERY_ROUTE,
 			products: [
 				{
 					productId: 'Product 1',
@@ -52,7 +53,7 @@ describe('fetchItems', () => {
 			userEmail: 'email@email.com',
 			userPhone: '123456789',
 			paymentMethod: OrderPaymentMethod.CASH,
-
+			status: OrderStatus.DELIVERY_ROUTE,
 			products: [
 				{
 					productId: 'Product 1',
@@ -67,7 +68,7 @@ describe('fetchItems', () => {
 			userEmail: 'email@email.com',
 			userPhone: '123456789',
 			paymentMethod: OrderPaymentMethod.CASH,
-
+			status: OrderStatus.DELIVERY_ROUTE,
 			products: [
 				{
 					productId: 'Product 2',
@@ -92,7 +93,7 @@ describe('fetchItems', () => {
 				userEmail: 'email@email.com',
 				userPhone: '123456789',
 				paymentMethod: OrderPaymentMethod.CASH,
-
+				status: OrderStatus.DELIVERY_ROUTE,
 				products: [
 					{
 						productId: 'Product 1',
@@ -107,6 +108,7 @@ describe('fetchItems', () => {
 				userEmail: 'email1@email.com',
 				userPhone: '123456789',
 				paymentMethod: OrderPaymentMethod.CASH,
+				status: OrderStatus.DELIVERY_ROUTE,
 				products: [
 					{
 						productId: 'Product 2',
@@ -136,6 +138,7 @@ describe('findById', () => {
 		const newOrder: CreateOrderDTO = {
 			userName: 'John Doe',
 			userPhone: '123456789',
+			status: OrderStatus.DELIVERY_ROUTE,
 			userEmail: 'email@email.com',
 			paymentMethod: OrderPaymentMethod.CASH,
 			products: [
@@ -169,6 +172,7 @@ describe('updateById', () => {
 			paymentMethod: OrderPaymentMethod.CASH,
 			userEmail: 'iago@email.com',
 			userAddress: 'John Doe Street',
+			status: OrderStatus.DELIVERY_ROUTE,
 			products: [],
 		};
 
