@@ -3,7 +3,9 @@ import { v4 as uuid } from 'uuid';
 
 import { Database } from '../../../../database/Database';
 import { ProductReport } from '../../entities/ProductReport';
-import { InsertProductReportDTO, ProductsReportRepository } from '../ProductsReportRepository';
+import {
+	InsertProductReportDTO, ListProductsReportFiltersDTO, ListProductsReportResult, ProductsReportRepository,
+} from '../ProductsReportRepository';
 
 export class ProductsReportRepositoryTypeOrm implements ProductsReportRepository {
     private repository = Database.source.getRepository(ProductReport);
@@ -14,5 +16,25 @@ export class ProductsReportRepositoryTypeOrm implements ProductsReportRepository
 
     	await this.repository.insert(productReport);
     	return productReport;
+    }
+
+    async list(filters: ListProductsReportFiltersDTO): Promise<ListProductsReportResult[]> {
+    	let whereOptions = '';
+
+    	if (filters.dateFilters) {
+    		whereOptions = `WHERE createdAt BETWEEN '${filters.dateFilters.getStart}' AND '${filters.dateFilters.getEnd}'`;
+    	}
+
+    	const query = `
+				SELECT productId, SUM(quantity) as totalQuantity
+				FROM products_report
+				INNER JOIN products ON products.id = products_report.productId
+				${whereOptions}
+				GROUP BY productId;
+			`;
+
+    	const result: ListProductsReportResult[] = await this.repository.query(query);
+
+    	return result;
     }
 }
