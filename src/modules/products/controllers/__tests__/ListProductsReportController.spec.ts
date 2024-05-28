@@ -30,7 +30,7 @@ it('should call usecase', async () => {
 		});
 
 	expect(response.status).toBe(200);
-	expect(response.body).toEqual({ data: [] });
+	expect(response.body).toEqual([]);
 
 	expect(usecase.execute).toBeCalledTimes(1);
 	expect(usecase.execute).toBeCalledWith({ dateFilters: expect.any(DateRange) });

@@ -22,11 +22,11 @@ export class ProductsReportRepositoryTypeOrm implements ProductsReportRepository
     	let whereOptions = '';
 
     	if (filters.dateFilters) {
-    		whereOptions = `WHERE createdAt BETWEEN '${filters.dateFilters.getStart}' AND '${filters.dateFilters.getEnd}'`;
+    		whereOptions = `WHERE products_report.createdAt BETWEEN '${filters.dateFilters.getStart}' AND '${filters.dateFilters.getEnd}'`;
     	}
-
+    	console.log(filters);
     	const query = `
-				SELECT productId, SUM(quantity) as totalQuantity
+				SELECT productId, products.name as productName, SUM(quantity) as totalQuantity
 				FROM products_report
 				INNER JOIN products ON products.id = products_report.productId
 				${whereOptions}

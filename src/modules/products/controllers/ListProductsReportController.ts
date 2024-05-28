@@ -22,9 +22,9 @@ export class ListProductsReportController {
 		const { from, to } = await this.bodySchema.validate(req.body, { abortEarly: false });
 
 		const listProductsReportRes = await this.listProductsReportUseCase.execute({
-			dateFilters: from && to ? new DateRange(from, to) : undefined,
+			dateFilters: from && to ? new DateRange(from.toString(), to.toString()) : undefined,
 		});
 
-		return res.status(200).send({ data: listProductsReportRes });
+		return res.status(200).send(listProductsReportRes);
 	}
 }

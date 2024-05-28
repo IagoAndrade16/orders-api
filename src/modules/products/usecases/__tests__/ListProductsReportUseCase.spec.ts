@@ -8,7 +8,7 @@ const productsReportRepository = find<ProductsReportRepository>(productsReportRe
 
 it('should list products report', async () => {
 	const filters = {
-		dateFilters: new DateRange(new Date(), new Date()),
+		dateFilters: new DateRange(new Date().toString(), new Date().toString()),
 	};
 
 	const listSpy = jest.spyOn(productsReportRepository, 'list');

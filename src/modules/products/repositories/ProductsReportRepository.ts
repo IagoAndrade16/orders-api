@@ -22,7 +22,7 @@ export type ListProductsReportFiltersDTO = {
 export type	ListProductsReportResult = {
 	productName: string;
 	productId: string;
-	totalQusntity: number;
+	totalQuantity: number;
 };
 
 export const productsReportRepositoryAlias = 'ProductsReportRepository';
