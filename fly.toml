@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for orders-api on 2024-06-10T06:35:50-03:00
+# fly.toml app configuration file generated for orders-api on 2024-06-10T07:10:49-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -20,3 +20,22 @@ primary_region = 'gig'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[env]
+  PORT = "3000"
+  NODE_ENV = "prod"
+
+  MYSQL_PORT = "3306"
+  MYSQL_DATABASE = "pizza_orders"
+  MYSQL_USER = "admin"
+  MYSQL_HOST = "peppe-forneria-db-test.cq68vpthk5mu.us-east-1.rds.amazonaws.com"
+  MYSQL_PASS = "peppeforneriadbpass"
+  MYSQL_TIMEZONE = "-03:00"
+
+  DB_LOGGING = "false"
+
+  ENCRYPTION_KEY = "FYgiZwXtVGmMbJ6TQAFuyyf2iJmmKnkU"
+  ENCRYPTION_IV = "rHGKUpGCuvqSPeCK"
+
+  JWT_EXP_IN_MINUTES = "1440"
+  JWT_SECRET = "tBew2E7BRYCbdQTg4y2BJmfFiZgJjuLUZR4VSFv6jpEC5pD7c5"
