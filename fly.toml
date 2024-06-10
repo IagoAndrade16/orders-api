@@ -28,7 +28,7 @@ primary_region = 'gig'
   MYSQL_PORT = "3306"
   MYSQL_DATABASE = "pizza_orders"
   MYSQL_USER = "admin"
-  MYSQL_HOST = "peppe-forneria-db-test.cq68vpthk5mu.us-east-1.rds.amazonaws.com"
+  MYSQL_HOST = "peppe-forneria-db.cq68vpthk5mu.us-east-1.rds.amazonaws.com"
   MYSQL_PASS = "peppeforneriadbpass"
   MYSQL_TIMEZONE = "-03:00"
 
