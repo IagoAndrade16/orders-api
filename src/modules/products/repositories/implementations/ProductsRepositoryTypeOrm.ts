@@ -30,7 +30,12 @@ export class ProductsRepositoryTypeOrm implements ProductsRepository {
 
     async fetchItems(filters: FetchProductsDTO): Promise<Product[]> {
     	const { page = 1, pageSize = 10 } = filters;
-    	const options: FindManyOptions<Product> = { skip: (page - 1) * pageSize, take: pageSize, where: { deleted: false } };
+    	const options: FindManyOptions<Product> = {
+    		skip: (page - 1) * pageSize,
+    		take: pageSize,
+    		where: { deleted: false },
+    		order: { createdAt: 'ASC' },
+    	};
 
     	if (filters.name) {
     		options.where = { ...options.where, name: Like(`%${filters.name}%`) };
