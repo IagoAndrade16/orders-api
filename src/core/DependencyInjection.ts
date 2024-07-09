@@ -7,6 +7,8 @@ import { ProductsReportRepositoryTypeOrm } from '../modules/products/repositorie
 import { ProductsRepositoryTypeOrm } from '../modules/products/repositories/implementations/ProductsRepositoryTypeOrm';
 import { ProductsReportRepository, productsReportRepositoryAlias } from '../modules/products/repositories/ProductsReportRepository';
 import { ProductsRepository, productsRepositoryAlias } from '../modules/products/repositories/ProductsRepository';
+import { ShippingRepositoryTypeOrm } from '../modules/shipping/repostitories/implementations/ShippingsRepositoryTypeOrm';
+import { ShippingRepository, shippingRepositoryAlias } from '../modules/shipping/repostitories/ShippingsRepository';
 import { UsersRepositoryTypeOrm } from '../modules/users/repositories/implementations/UsersRepositoryTypeOrm';
 import { UsersRepository, usersRepositoryAlias } from '../modules/users/repositories/UsersRepository';
 import { ApiProvider, apiProviderAlias } from '../providers/api/ApiProvider';
@@ -34,6 +36,7 @@ export class DependencyInjection {
 		container.registerSingleton<ProductsRepository>(productsRepositoryAlias, ProductsRepositoryTypeOrm);
 		container.registerSingleton<ProductsReportRepository>(productsReportRepositoryAlias, ProductsReportRepositoryTypeOrm);
 		container.registerSingleton<OrdersRepository>(ordersRepositoryAlias, OrdersRepositoryTypeOrm);
+		container.registerSingleton<ShippingRepository>(shippingRepositoryAlias, ShippingRepositoryTypeOrm);
 	}
 }
 

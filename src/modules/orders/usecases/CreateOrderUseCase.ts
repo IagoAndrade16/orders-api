@@ -46,6 +46,7 @@ export class CreateOrderUseCase implements UseCase<CreateOrderUseCaseInput, Crea
 			orderId: orderCreated.id,
 			paymentMethod: orderCreated.paymentMethod,
 			status: orderCreated.status,
+			shippingId: orderCreated.shippingId,
 		};
 	}
 }

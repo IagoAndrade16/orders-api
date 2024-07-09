@@ -7,6 +7,7 @@ import { UseCase } from '../../../core/UseCase';
 import { DomainError } from '../../../server/errors/DomainError';
 import { Product } from '../../products/entities/Product';
 import { ProductsRepository, productsRepositoryAlias } from '../../products/repositories/ProductsRepository';
+import { ShippingRepository, shippingRepositoryAlias } from '../../shipping/repostitories/ShippingsRepository';
 import { Order } from '../entities/Order';
 import { OrdersRepository, ordersRepositoryAlias } from '../repositories/OrdersRepository';
 
@@ -23,6 +24,7 @@ export type GetSingleOrderUseCaseOutput = Pick<Order, 'id' | 'userAddress' | 'us
 		quantity: number;
 	}[],
 	createdAt: string;
+	shippingPrice: number;
 }
 
 @singleton()
@@ -33,6 +35,9 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 
     @inject(productsRepositoryAlias)
     private readonly productsRepository: ProductsRepository,
+
+    @inject(shippingRepositoryAlias)
+    private readonly shippingRepository: ShippingRepository,
 	) {}
 
 	async execute(input: GetSingleOrderUseCaseInput): Promise<GetSingleOrderUseCaseOutput | null> {
@@ -50,6 +55,8 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 				products.push(productData);
 			}
 		}
+
+		const shipping = await this.shippingRepository.findById(order.shippingId);
 
 		return {
 			id: order.id,
@@ -69,6 +76,7 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 					imgUrl: product.imageUrl ?? '',
 				};
 			}),
+			shippingPrice: shipping!.value,
 		};
 	}
 }

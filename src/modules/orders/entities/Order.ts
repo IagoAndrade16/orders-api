@@ -49,4 +49,7 @@ export class Order {
   	type: 'varchar', length: 255, nullable: true, enum: OrderStatus,
   })
   status: OrderStatus;
+
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  shippingId: string;
 }

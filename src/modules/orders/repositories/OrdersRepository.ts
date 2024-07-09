@@ -17,6 +17,7 @@ export type CreateOrderDTO = {
 	products: OrderProductDTO[];
 	paymentMethod: OrderPaymentMethod;
 	status: OrderStatus;
+	shippingId: string;
 }
 
 export type OrderProductDTO = {

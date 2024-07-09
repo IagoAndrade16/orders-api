@@ -23,6 +23,7 @@ export class CreateOrderController {
     		quantityOfProduct: yup.number().required().min(1),
     	})).min(1).required(),
     	paymentMethod: yup.string().required().oneOf(Object.values(OrderPaymentMethod)),
+    	shippingId: yup.string().required(),
     });
 
     async handle(req: Request, res: Response): Promise<Response> {
