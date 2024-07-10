@@ -76,7 +76,7 @@ export class GetSingleOrderUseCase implements UseCase<GetSingleOrderUseCaseInput
 					imgUrl: product.imageUrl ?? '',
 				};
 			}),
-			shippingPrice: shipping!.value,
+			shippingPrice: shipping! ? shipping!.value : 0,
 		};
 	}
 }
